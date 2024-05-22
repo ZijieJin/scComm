@@ -26,6 +26,10 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 `res = scComm(data, anno)`
 
+## Result Interpretation
+
+
+
 ## Commercial use
 
 For non-academic use, please email Dr. Jin (jinzijie@bjmu.edu.cn) to obtain the paid commercial license.
