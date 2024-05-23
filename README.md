@@ -28,9 +28,15 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 ## Result Interpretation
 
-`scComm()` returns a list containing weights, cciscore (a list), GroupCCC, cellanno, expr.
+`scComm()` returns a list containing weights, ccires (a list), GroupCCC, cellanno, expr.
 
-weights contains weight1, 2, 3, and totalweight(the product of weight 1,2,3)
+weights contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3).
+
+ccires is a list containing result below: 
+- cciscore: a cell-by-cell matrix of aggregating cell-cell interaction score of each cell pair
+- lrscore: cell type-cell type interaction score with each L-R pair
+- sender_lr: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of jth cell as sender cell to all other cells with L-R pair i.
+- receptor_lr: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of all other cells to jth cell as receptor cell with L-R pair i.
 
 GroupCCC is a matrix indicating the CCI scores between one cell type and another.
 
