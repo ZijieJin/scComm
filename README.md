@@ -4,7 +4,7 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 ## Software Prerequisite
 
 - R (tested on 4.2.1)
-- R package: stringr, entropy, Seurat (tested on V4), pracma, RcppML, NMF, matrixStats, progress
+- R package: stringr, entropy, pracma, RcppML, NMF, matrixStats, progress
 
 ## Recommend Configuration
 
@@ -28,10 +28,10 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 ## Result Interpretation
 
-
+`scComm` returns a list containing 
 
 ## Commercial use
 
-For non-academic use, please email Dr. Jin (jinzijie@bjmu.edu.cn) to obtain the paid commercial license.
+For non-academic use, please email Dr. Jin (jzj2035198@outlook.com) to obtain the paid commercial license.
 
 For academic use, source code is licensed under MIT License. 
