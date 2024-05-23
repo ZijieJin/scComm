@@ -6,7 +6,7 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 - R (tested on 4.2.1)
 - R package: stringr, entropy, pracma, RcppML, NMF, matrixStats, progress
 
-## Recommend Configuration
+## System Requirement
 
 - 32 GB memory or more 
 
@@ -28,7 +28,9 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 ## Result Interpretation
 
-`scComm` returns a list containing 
+`scComm()` returns a list containing weights, cciscore (a list), GroupCCC, cellanno, expr.
+
+
 
 ## Commercial use
 
