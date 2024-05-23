@@ -26,7 +26,7 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 `res = scComm(data, anno)`
 
-## Result Interpretation
+After running `scComm()`, user can run `res = FindLRscoreGivenCells(scCommRes, celllist, lr_database)` to get the detailed CCI score with each L-R pair between cell type user defined. 
 
 `scComm()` returns a list containing weights, ccires (a list), GroupCCC, cellanno, expr.
 
@@ -44,6 +44,11 @@ cellanno is a vector indicating the annotation of each input, which is given by 
 
 expr is a gene-by-cell matrix indicating the expression
 
+res$ccires$cciscore can be used to analyze the interaction patterns (aggregate by cell type to get cell-by-cell type matrix)
+
+GroupCCC provides cell type-level cell-cell communication scores.
+
+`FindLRscoreGivenCells()` returns a list containing lrscore and lrscoresd, which are LR pair-by-cell group matrix indicating the mean and standard variation of CCI score of each L-R pair and cell interaction group, respectively. 
 
 
 ## Commercial use
