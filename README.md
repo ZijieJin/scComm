@@ -30,6 +30,14 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 `scComm()` returns a list containing weights, cciscore (a list), GroupCCC, cellanno, expr.
 
+weights contains weight1, 2, 3, and totalweight(the product of weight 1,2,3)
+
+GroupCCC is a matrix indicating the CCI scores between one cell type and another.
+
+cellanno is a vector indicating the annotation of each input, which is given by user.
+
+expr is a gene-by-cell matrix indicating the expression
+
 
 
 ## Commercial use
