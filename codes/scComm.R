@@ -320,8 +320,8 @@ MakeAllGroupSig <- function() {
     return(GroupCCC_all)
 }
 
-FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "scriabin_LR_OmniPath.txt"){
-    scCommInit(expr, anno, lr_database)
+FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "./data/scriabin_LR_OmniPath.txt", tf_database = "./data/dorothea.rds"){
+    scCommInit(expr, anno, lr_database, tf_database)
     totalweight <- scCommRes$weights$totalweight
     
     celllist = celllist[celllist$CellName %in% cellanno$cellname,]
