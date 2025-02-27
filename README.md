@@ -26,6 +26,8 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 `res = scComm(data, anno)`
 
+## Result
+
 `scComm()` returns a list containing weights, ccires (a list), GroupCCC, cellanno, expr.
 
 weights contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3).
