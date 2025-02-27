@@ -1,4 +1,4 @@
-library(entropy)
+elibrary(entropy)
 library(Seurat)
 library(pracma)
 library(RcppML)
@@ -36,6 +36,8 @@ scCommInit <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_databa
 }
 
 scComm <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_database = './data/regulation.rds', set_weight1 = F, set_weight2 = F, set_weight3 = F) {
+    expr = t(t(expr) / colSums(expr))
+    expr = log(1 + expr)
     scCommInit(expr, anno, lr_database, tf_database)
     print("##### Evaluating Weights #####")
     weights <- CalcWeights(expr, anno, set_weight1 = set_weight1, set_weight2 = set_weight2, set_weight3 = set_weight3)
