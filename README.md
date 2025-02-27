@@ -57,8 +57,11 @@ After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(scCommRes, 
 Download the data in the folder `testdata/`, and run 
 
 `source('codes/scComm.R')`
+
 `expr = readRDS('testdata/expr.rds')`
+
 `anno = readRDS('testdata/anno.rds')`
+
 `res = scComm(expr, anno)`
 
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
