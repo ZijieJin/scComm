@@ -52,6 +52,17 @@ After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(scCommRes, 
 
 `res2$lrscore` can be used to analyze the interacting L-R pairs with given cells.
 
+## Sample Usage
+
+Download the data in the folder `testdata/`, and run 
+
+`source('codes/scComm.R')`
+`expr = readRDS('testdata/expr.rds')`
+`anno = readRDS('testdata/anno.rds')`
+`res = scComm(expr, anno)`
+
+Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
+The output is listed at `./res2.rds`
 
 ## Commercial use
 
