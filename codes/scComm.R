@@ -7,7 +7,7 @@ library(matrixStats)
 library(progress)
 library(stringr)
 
-scCommInit <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", tf_database = '/share/home/jinzj/scComm/dorothea.rds'){
+scCommInit <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_database = './data/regulation.rds'){
     lr_network <<- read.table(lr_database, sep = "\t")
     tfs <<- readRDS(tf_database)
     colnames(lr_network) <- c("from", "to")
@@ -35,7 +35,7 @@ scCommInit <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", t
     cellanno <<- data.frame(cellname = colnames(expr), anno = anno)
 }
 
-scComm <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", tf_database = '/share/home/jinzj/scComm/dorothea.rds', set_weight1 = F, set_weight2 = F, set_weight3 = F) {
+scComm <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_database = './data/regulation.rds', set_weight1 = F, set_weight2 = F, set_weight3 = F) {
     scCommInit(expr, anno, lr_database, tf_database)
     print("##### Evaluating Weights #####")
     weights <- CalcWeights(expr, anno, set_weight1 = set_weight1, set_weight2 = set_weight2, set_weight3 = set_weight3)
@@ -148,7 +148,7 @@ CalcWeights <- function(expr, anno, set_weight1 = F, set_weight2 = F, set_weight
                 t(matrix(rep(rcor, length(this_data_groups)), ncol = length(this_data_groups)))) / 2
             progress$tick()
         }
-        weight3 <- sigmoid(weight3, a = 10)
+        weight3 <- sigmoid(weight3, a = 3)
         totalweight <- totalweight * weight3
     }
     return(list(totalweight = totalweight, weight1 = weight1, weight2 = weight2, weight3 = weight3))
