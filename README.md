@@ -30,25 +30,23 @@ scComm is a computational pipeline for inferring cell-cell communication at sing
 
 `scComm()` returns a list containing weights, ccires (a list), GroupCCC, cellanno, expr.
 
-weights contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3).
+*weights* contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3).
 
-ccires is a list containing result below: 
-- cciscore: a cell-by-cell matrix of aggregating cell-cell interaction score of each cell pair
-- lrscore: cell type-cell type interaction score with each L-R pair
-- sender_lr: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of jth cell as sender cell to all other cells with L-R pair i.
-- receptor_lr: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of all other cells to jth cell as receptor cell with L-R pair i.
+*ccires* is a list containing result below: 
+- *cciscore*: a cell-by-cell matrix of aggregating cell-cell interaction score of each cell pair
+- *lrscore*: cell type-cell type interaction score with each L-R pair, which can be used to analyze the interacting L-R pairs with given cells.
+- *sender_lr*: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of jth cell as sender cell to all other cells with L-R pair i.
+- *receptor_lr*: an LR pair-by-cell matrix of aggregating cell-cell interaction score where the element (i,j) indicates the sum of interaction score of all other cells to jth cell as receptor cell with L-R pair i.
 
-GroupCCC is a matrix indicating the CCI scores between one cell type and another.
+*GroupCCC* is a matrix indicating the CCI scores between one cell type and another. It provides cell type-level cell-cell communication scores.
 
-cellanno is a vector indicating the annotation of each input, which is given by user.
+*cellanno* is a vector indicating the annotation of each input, which is given by user.
 
-expr is a gene-by-cell matrix indicating the expression
+*expr* is a gene-by-cell matrix indicating the expression
 
 `res$ccires$cciscore` can be used to analyze the interaction patterns (aggregate by cell type to get cell-by-cell type matrix)
 
-GroupCCC provides cell type-level cell-cell communication scores.
-
-After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(scCommRes, celllist, lr_database)` to get the detailed CCI score with each L-R pair between cell type user defined. Here, scCommRes is the result returned by `scComm()`, celllist is a data.frame (see the format in testdata)
+After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(scCommRes, celllist, lr_database)` to get the detailed CCI score with each L-R pair between cell groups user defined. Here, scCommRes is the result returned by `scComm()`, celllist is a data.frame (see the format in testdata)
 
 `FindLRscoreGivenCells()` returns a list containing lrscore and lrscoresd, which are LR pair-by-cell group matrix indicating the mean and standard variation of CCI score of each L-R pair and cell interaction group, respectively. 
 
