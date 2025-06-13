@@ -381,3 +381,73 @@ FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "scri
     return(list(lrscore = lrscore, lrscoresd = lrscoresd))
 }
 
+MakeAugmentedData <- function(expr, scCommRes, lr_database = "scriabin_LR_OmniPath.txt"){
+    scCommInit(expr, anno, lr_database)
+    totalweight <- scCommRes$weights$totalweight
+    Fulldata <- matrix(0, nrow = length(unique(anno))^2, ncol = length(LRpairs_str))
+    rownames(Fulldata) <- str_c(rep(unique(anno), each = length(unique(anno))), 
+                                                           rep(unique(anno), times = length(unique(anno))), sep = '---')
+    colnames(Fulldata) <- LRpairs_str
+    for (i in 1:length(LRpairs_str)) {
+        thispair <- LRpairs_str[i]
+        thispair_split <- str_split(thispair, '---')[[1]]
+        thisfrom <- thispair_split[1]
+        thisto <- thispair_split[2]
+        Fulldata[i, ] <- scCommRes$ccires$lrscore[thisfrom, thisto, ]
+    }
+    rs = rowSums(Fulldata)
+    highcut = quantile(rs, 0.95)
+    PositiveData = Fulldata[rs > highcut, ]
+
+    ### Data Augmentation for PositiveData
+    AugmentedData <- matrix(0, nrow = 1000, ncol = ncol(PositiveData))
+    rownames(AugmentedData) <- paste0('Augmented_', 1:1000)
+    colnames(AugmentedData) <- colnames(PositiveData)
+    for (i in 1:nrow(AugmentedData)) {
+        thisrow = sample(1:nrow(PositiveData), 1)
+        reducefactor = runif(ncol(PositiveData), 0, 0.5) * round(runif(ncol(PositiveData), 0.1, 0.55))
+        AugmentedData[i, ] = PositiveData[thisrow, ] * (1 - reducefactor)
+    }
+    AugmentedData = rbind(AugmentedData, PositiveData)
+    AugmentedData = AugmentedData[!duplicated(AugmentedData), ]
+    PositiveData = AugmentedData
+
+    ### Data Augmentation for NegativeData
+    NegativeData <- matrix(0, nrow = 2000, ncol = length(LRpairs_str)).
+    rownames(NegativeData) <- paste0('Negative_', 1:2000)
+    colnames(NegativeData) <- LRpairs_str
+    progress <- progress_bar$new(total = length(lr_network$from), clear = F)
+    for (l in 1:length(lr_network$from)) {
+        progress$tick()
+        thissd <- sqrt(sd(expr[lr_network$from[l], ]) * sd(expr[lr_network$to[l], ]))
+        if (thissd < 0.1) {
+            next()
+        }
+        exprlij <- sqrt(expr[lr_network$from[l], ] %*% t(expr[lr_network$to[l], ]))
+        exprlij_nonzero <- exprlij[exprlij > 0]
+        nonzeroprop <- length(exprlij_nonzero) / length(exprlij)
+        if (nonzeroprop <= 0.0001) {
+            next()
+        }
+        thismean <- mean(exprlij_nonzero) * nonzeroprop
+        thissd <- sqrt((sd(exprlij_nonzero)^2 + (1 - nonzeroprop) * mean(exprlij_nonzero)^2) * nonzeroprop)
+        exprlij <- (exprlij - thismean) / thissd
+        exprlij[exprlij < 0] <- 0
+        exprlij[exprlij > 5] <- 5
+        cciaddmat <- exprlij * totalweight[anno, anno, l]
+        for (i in 1:2000) {
+            thisSender = sample(1:nrow(cciaddmat), 100)
+            thisReceptor = sample(1:ncol(cciaddmat), 100)
+            NegativeData[i, l] = cciaddmat[thisSender, thisReceptor]
+        }
+    }
+    write.csv(NegativeData, file = 'NegativeData.csv', row.names = T, quote = F)
+    write.csv(PositiveData, file = 'PositiveData.csv', row.names = T, quote = F)
+    write.csv(Fulldata, file = 'Fulldata.csv', row.names = T, quote = F)
+    print("Data Augmentation Completed!")
+    return(list(
+        NegativeData = NegativeData,
+        PositiveData = PositiveData,
+        Fulldata = Fulldata
+    ))
+}
