@@ -87,7 +87,7 @@ Download the data in the folder `testdata/`, and run
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
 The output is listed at `./res2.rds`
 
-## Commercial use
+## Commercial Use
 
 For non-academic use, please email Dr. Jin (jzj2035198@outlook.com) to obtain the paid commercial license.
 
