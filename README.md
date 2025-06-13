@@ -8,9 +8,11 @@ scComm is a computational pipeline for inferring cell-cell communication (CCC) a
 If you have any questions related to scComm, please visit https://github.com/ZijieJin/scComm and post them on the Issues page or email me: jzj2035198@outlook.com
 
 ## Software Prerequisite
-scComm works on R platform with any OS.
-- R (tested on 4.2.1)
+scComm works on R and Python platform with any OS.
+- R (tested on 4.2.3)
 - R package: stringr, entropy, pracma, RcppML, NMF, matrixStats, progress
+- Python (tested on 3.12)
+- Python modules: numpy (1.26.4), pandas (2.2.3), torch (2.5.0), scikit-learn (1.5.2)
 
 ## System Requirement
 
@@ -18,14 +20,12 @@ To run scComm properly, Your computer should have:
 
 - 32 GB memory or more 
 
-- 4 CPU cores or more
-
 
 ## Data Requirement
 
 scComm requires three inputs:
 
-- Single-cell RNA-seq gene expression data (10X or Smart-seq) with cell annotations
+- Single-cell RNA-seq gene expression data with cell annotations
 
 - (optional) Ligand-receptor database
 
@@ -41,11 +41,17 @@ Then, run scComm using all-in-one function:
 
 `res = scComm(data, anno)`
 
+To identify significant interating cell type pairs, run the supervised contrastive learning by two steps:
+
+Step 1: run the commend in R `MakeAugmentedData(data, res)` to generate training datasets for the  contrastive learning;
+
+Step 2: run the commend in Python `python codes/ContrastiveLearning.py PositiveData.csv NegativeData.csv Fulldata.csv`. The result is stored in 'fulldata_prediction.csv'
+
 ## Result
 
 `scComm()` returns a list containing weights, ccires (a list), GroupCCC, cellanno, expr.
 
-*weights* contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3). User can ignore it.
+*weights* contains weight 1, 2, 3, and totalweight(the product of weight 1,2,3).
 
 *ccires* is a list containing main result below: 
 - *cciscore*: a cell-by-cell matrix of aggregating cell-cell interaction score of each cell pair (important)
@@ -64,6 +70,7 @@ After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(res, cellli
 `FindLRscoreGivenCells()` returns a list containing lrscore and lrscoresd, which are LR pair-by-cell group matrix indicating the mean and standard variation of CCI score of each L-R pair and cell interaction group, respectively. 
 
 `res2$lrscore` can be used to analyze the interacting L-R pairs with given cells.
+
 
 ## Sample Usage
 
