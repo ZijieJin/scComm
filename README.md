@@ -25,11 +25,13 @@ To run scComm properly, Your computer should have:
 
 scComm requires three inputs:
 
-- Single-cell RNA-seq gene expression data with cell annotations
+- Single-cell RNA-seq gene expression data with cell annotations. The gene expression matrix is a gene-by-cell matrix, and cell annotations are provided by a tow-column csv file, including cell names and cell types.
 
-- (optional) Ligand-receptor database
+- (optional) custom Ligand-receptor database. User can also provide other L-R databases, which is a two-column csv file indicating ligands and receptors. 
 
-- (optional) downstream regulation database
+- (optional) downstream regulation database. User can also provide other downstream regulation databaases. The file format should be the same as  `dorothea.rds`
+
+
 
 ## Usage
 
@@ -72,7 +74,7 @@ After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(res, cellli
 `res2$lrscore` can be used to analyze the interacting L-R pairs with given cells.
 
 
-## Sample Usage
+## Sample Usage on Testdata  
 
 Download the data in the folder `testdata/`, and run 
 
