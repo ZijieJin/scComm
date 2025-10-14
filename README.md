@@ -27,7 +27,7 @@ scComm requires three inputs:
 
 - Single-cell RNA-seq gene expression data with cell annotations. The gene expression matrix is a gene-by-cell matrix, and cell annotations are provided by a tow-column csv file, including cell names and cell types.
 
-- (optional) custom Ligand-receptor database. User can also provide other L-R databases, which is a two-column csv file indicating ligands and receptors. 
+- (optional) custom Ligand-receptor database. User can also provide other L-R databases, which is a two-column csv file indicating ligands and receptors without header. 
 
 - (optional) downstream regulation database. User can also provide other downstream regulation databaases. The file format should be the same as  `dorothea.rds`
 
@@ -48,6 +48,9 @@ To identify significant interating cell type pairs, run the supervised contrasti
 Step 1: run the commend in R `MakeAugmentedData(data, res)` to generate training datasets for the  contrastive learning;
 
 Step 2: run the commend in Python `python codes/ContrastiveLearning.py PositiveData.csv NegativeData.csv Fulldata.csv`. The result is stored in 'fulldata_prediction.csv'
+
+if user provides custom L-R pair database and/or gene regulatory database, please specify the path using:
+`res = scComm(data, anno, lr_database = PATH, tf_database = PATH)`
 
 ## Result
 
@@ -88,6 +91,10 @@ Download the data in the folder `testdata/`, and run
 
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
 The output is listed at `./res2.rds`
+
+## Full Pipeline of scComm
+
+
 
 ## Commercial Use
 
