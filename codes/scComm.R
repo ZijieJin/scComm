@@ -1,4 +1,4 @@
-elibrary(entropy)
+library(entropy)
 library(Seurat)
 library(pracma)
 library(RcppML)
