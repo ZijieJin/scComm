@@ -92,7 +92,17 @@ Download the data in the folder `testdata/`, and run
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
 The output is listed at `./res2.rds`
 
-## Full Pipeline of scComm
+## Full workflow of scComm
+
+Step1: Calculaing weights for L-R pairs
+`CalcWeights()` function returns three weights and the product of these weights.
+this function two paremeters: expr and anno. 
+usage: `weights = CalcWeights(expr, anno)`
+
+Step2: Calculating CCC score for each L-R pair between any two cells
+'CalcCCI()` function returns two matrices: cciscore and lrscore.
+cciscore is a cell-by-cell matrix that represents the intercellular communication intensity between any two cells;
+lrscore is a celltype-by-celltype-by-LRpair tensor that represents the CCC score between one cell type and another on a given L-R gene pair.
 
 
 
