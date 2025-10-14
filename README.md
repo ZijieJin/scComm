@@ -43,14 +43,15 @@ Then, run scComm using all-in-one function:
 
 `res = scComm(data, anno)`
 
+if user provides custom L-R pair database and/or gene regulatory database, please specify the path using:
+`res = scComm(data, anno, lr_database = PATH, tf_database = PATH)`
+
 To identify significant interating cell type pairs, run the supervised contrastive learning by two steps:
 
-Step 1: run the commend in R `MakeAugmentedData(data, res)` to generate training datasets for the  contrastive learning;
+Step 1: run the commend in R `MakeAugmentedData(data, res)` to generate training datasets for the contrastive learning;
 
 Step 2: run the commend in Python `python codes/ContrastiveLearning.py PositiveData.csv NegativeData.csv Fulldata.csv`. The result is stored in 'fulldata_prediction.csv'
 
-if user provides custom L-R pair database and/or gene regulatory database, please specify the path using:
-`res = scComm(data, anno, lr_database = PATH, tf_database = PATH)`
 
 ## Result
 
@@ -90,20 +91,34 @@ Download the data in the folder `testdata/`, and run
 `res = scComm(expr, anno)`
 
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
-The output is listed at `./res2.rds`
+The output is listed at `./res.rds`
 
 ## Full workflow of scComm
 
 Step1: Calculaing weights for L-R pairs
+
 `CalcWeights()` function returns three weights and the product of these weights.
+
 this function two paremeters: expr and anno. 
-usage: `weights = CalcWeights(expr, anno)`
+
 
 Step2: Calculating CCC score for each L-R pair between any two cells
-'CalcCCI()` function returns two matrices: cciscore and lrscore.
+
+`CalcCCI()` function returns two matrices: cciscore and lrscore.
+
 cciscore is a cell-by-cell matrix that represents the intercellular communication intensity between any two cells;
+
 lrscore is a celltype-by-celltype-by-LRpair tensor that represents the CCC score between one cell type and another on a given L-R gene pair.
 
+Step3: Calculating Group CCC score for each L-R pair between any two cell group
+
+`CalcGroupCCI()` function returns a group-by-group matrix that represents the intercellular communication intensity between any two cell groups.
+
+Step4: Make augmented dataset for contrastive learning
+
+`MakeAugmentedData()` function returns positive dataset and negative dataset for contrastive learning.
+
+And then run `python codes/ContrastiveLearning.py PositiveData.csv NegativeData.csv Fulldata.csv` to obtain the final result.
 
 
 ## Commercial Use
