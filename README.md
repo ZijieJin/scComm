@@ -3,7 +3,8 @@
 scComm is a computational pipeline for inferring cell-cell communication (CCC) at single-cell resolution. The main function of scComm includes:
 - Calculate CCC scores between any single cell pairs to reveal the strength of intercellular communications
 - Calculate CCC scores between two cell types like CellChat and CellphoneDB
-- Report CCC scores between any custom cell groups without the need for rerun.
+- Report CCC scores between any custom cell groups without the need for rerun
+- Report significant CCC between two cell types using contrastive learning module.
 
 If you have any questions related to scComm, please visit https://github.com/ZijieJin/scComm and post them on the Issues page or email me: jzj2035198@outlook.com
 
@@ -71,7 +72,7 @@ Step 2: run the commend in Python `python codes/ContrastiveLearning.py PositiveD
 
 `res$ccires$cciscore` can be used to analyze the interaction patterns (aggregate by cell type to get cell-by-cell type matrix)
 
-After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(res, celllist, lr_database)` to get the detailed CCI score with each L-R pair between cell groups user defined. Here, `res` is the result returned by `scComm()`, celllist is a data.frame (see the format in testdata)
+After running `scComm()`, user can run `res2 = FindLRscoreGivenCells(res, celllist, lr_database)` to get the detailed CCC score with each L-R pair between cell groups user defined. Here, `res` is the result returned by `scComm()`, celllist is a data.frame (see the format in testdata)
 
 `FindLRscoreGivenCells()` returns a list containing lrscore and lrscoresd, which are LR pair-by-cell group matrix indicating the mean and standard variation of CCI score of each L-R pair and cell interaction group, respectively. 
 
@@ -90,17 +91,22 @@ Download the data in the folder `testdata/`, and run
 
 `res = scComm(expr, anno)`
 
+`MakeAugmentedData(expr, res)`
+
+`python codes/ContrastiveLearning.py PositiveData.csv NegativeData.csv Fulldata.csv`
+
 Tested on MacStudio M1Max 10 CPUs with 32GB memory, it costs less than 5 minutes.
-The output is listed at `./res.rds`
+
 
 ## Full workflow of scComm
+
+If you want to run each step of scComm manually, please follow the manual below. We recommand using the all-in-one function `scComm(data, anno)`
 
 Step1: Calculaing weights for L-R pairs
 
 `CalcWeights()` function returns three weights and the product of these weights.
 
-this function two paremeters: expr and anno. 
-
+this function requires two paremeters: expr (gene expression matrix) and anno (cell annotation vector). 
 
 Step2: Calculating CCC score for each L-R pair between any two cells
 
