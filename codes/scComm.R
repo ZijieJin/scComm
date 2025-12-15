@@ -7,7 +7,7 @@ library(matrixStats)
 library(progress)
 library(stringr)
 
-scCommInit <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", tf_database = './dorothea.rds'){
+scCommInit <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_database = './data/regulation.rds'){
     lr_network <<- read.table(lr_database, sep = "\t")
     tfs <<- readRDS(tf_database)
     colnames(lr_network) <- c("from", "to")
@@ -35,7 +35,7 @@ scCommInit <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", t
     cellanno <<- data.frame(cellname = colnames(expr), anno = anno)
 }
 
-scComm <- function(expr, anno, lr_database = "./scriabin_LR_OmniPath.txt", tf_database = './dorothea.rds', set_weight1 = F, set_weight2 = F, set_weight3 = F) {
+scComm <- function(expr, anno, lr_database = "./data/LRpairs.txt", tf_database = './dorothea.rds', set_weight1 = F, set_weight2 = F, set_weight3 = F) {
     scCommInit(expr, anno, lr_database, tf_database)
     print("##### Evaluating Weights #####")
     weights <- CalcWeights(expr, anno, set_weight1 = set_weight1, set_weight2 = set_weight2, set_weight3 = set_weight3)
@@ -322,7 +322,7 @@ MakeAllGroupSig <- function() {
     return(GroupCCC_all)
 }
 
-FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "scriabin_LR_OmniPath.txt"){
+FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "./data/LRpairs.txt"){
     scCommInit(expr, anno, lr_database)
     totalweight <- scCommRes$weights$totalweight
     
@@ -380,7 +380,7 @@ FindLRscoreGivenCells <- function(expr, scCommRes, celllist, lr_database = "scri
     return(list(lrscore = lrscore, lrscoresd = lrscoresd))
 }
 
-MakeAugmentedData <- function(expr, scCommRes, lr_database = "./scriabin_LR_OmniPath.txt", prop = 0.05){
+MakeAugmentedData <- function(expr, scCommRes, lr_database = "./data/LRpairs.txt", prop = 0.05){
     anno = scCommRes$cellanno$anno
     scCommInit(expr, anno, lr_database)
     totalweight <- scCommRes$weights$totalweight
