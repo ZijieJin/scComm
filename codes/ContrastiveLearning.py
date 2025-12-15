@@ -55,13 +55,9 @@ def supcon_loss(features, labels, temperature=0.5):
 
 
 # Load Data
-PositiveData = pd.read_csv('/Users/zijie/Desktop/CellCommunication/data/Revision1/R2.1.1/SimuData_2_8/Positive_3.csv', sep=',', index_col=0)
-NegativeData = pd.read_csv('/Users/zijie/Desktop/CellCommunication/data/Revision1/R2.1.1/SimuData_2_8/Negative_3.csv', sep=',', index_col=0)
-FullData = pd.read_csv('/Users/zijie/Desktop/CellCommunication/data/Revision1/R2.1.1/SimuData_2_8/FullData_3.csv', sep=',', index_col=0)
-
-# PositiveData = pd.read_csv(sys.argv[1], sep=',', index_col=0)
-# NegativeData = pd.read_csv(sys.argv[2], sep=',', index_col=0)
-# FullData = pd.read_csv(sys.argv[3], sep=',', index_col=0)
+PositiveData = pd.read_csv(sys.argv[1], sep=',', index_col=0)
+NegativeData = pd.read_csv(sys.argv[2], sep=',', index_col=0)
+FullData = pd.read_csv(sys.argv[3], sep=',', index_col=0)
 
 
 # Prepare Data
