@@ -29,7 +29,7 @@ scComm requires three inputs:
 
 - (optional) custom Ligand-receptor database. User can also provide other L-R databases, which is a two-column csv file indicating ligands and receptors without header. 
 
-- (optional) downstream regulation database. User can also provide other downstream regulation databaases. The file format should be the same as  `dorothea.rds`
+- (optional) downstream regulation database. User can also provide other downstream regulation databaases. The file format should be the same as  `regulation.rds`
 
 
 
