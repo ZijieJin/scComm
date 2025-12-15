@@ -444,6 +444,9 @@ MakeAugmentedData <- function(expr, scCommRes, lr_database = "./data/LRpairs.txt
         NegativeData[, l] = sample(as.vector(cciaddmat), 2000)
     }
     print("Data Augmentation Completed!")
+    write.csv(NegativeData, './NegativeData.csv', quote = F)
+    write.csv(PositiveData, './PositiveData.csv', quote = F)
+    write.csv(Fulldata, './Fulldata.csv', quote = F)
     return(list(
         NegativeData = NegativeData,
         PositiveData = PositiveData,
