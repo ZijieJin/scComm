@@ -238,7 +238,7 @@ CalcGroupCCI <- function(expr, anno, cciscore) {
 FindHighCommGroup_Permutation_Simple <- function(expr, anno, GroupCCC, cciscore) {
     GroupCCC_sig <- data.frame(g1 = 0, g2 = 0)
     nullgroupccc <- c()
-    for (i in 1:5) {
+    for (i in 1:100) {
         fakeanno <- sample(anno, length(anno))
         fakeGroupCCC <- CalcGroupCCI(expr, fakeanno, cciscore)
         nullgroupccc <- c(nullgroupccc, as.vector(fakeGroupCCC))
