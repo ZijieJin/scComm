@@ -1,5 +1,8 @@
 # scComm
 
+The manuscript is available on Genome Biology.
+Cite: Jin, Z., Tang, Z., Li, X. et al. scComm: a contrastive learning framework for deciphering cell–cell communications at single-cell resolution. Genome Biol (2026). https://doi.org/10.1186/s13059-026-04043-9
+
 scComm is a computational pipeline for inferring cell-cell communication (CCC) at single-cell resolution. The main function of scComm includes:
 - Calculate CCC scores between any single cell pairs to reveal the strength of intercellular communications
 - Calculate CCC scores between two cell types like CellChat and CellphoneDB
